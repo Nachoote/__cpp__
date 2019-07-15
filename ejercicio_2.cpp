@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "./constantes.h"
+#include <cstdlib>
+#include <ctime>
 
 
 int main(){	
@@ -11,6 +13,7 @@ int main(){
 	int fil;
 	int col;
 	int diag;
+	int random;
 
 /* ====================== Cargar Matriz ========================*/
 	for(i = 0; i < EJ2_N; i++){
@@ -45,6 +48,9 @@ int main(){
 
 	
 /* ====================== Generar Numero Aleatorio ========================*/
+	srand(time(0));
+	random = (rand() % (9 * EJ2_N)) + 0;
+	
 /* ====================== Fin Numero Aleatorio ========================*/
 
 	sumas sum;
