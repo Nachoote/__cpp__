@@ -2,6 +2,7 @@
 #include "./constantes.h"	// 
 #include <cstdlib>		// Libreria estandar de C, necesaria para la generacion de numeros aleatorios (rand)
 #include <ctime>		// Libreria para manejo de fechas y tiempo, necesaria para inicializar el generador de numeros aleatorios (time)
+#include <stdlib.h>
 
 
 
@@ -9,15 +10,13 @@
 /*======================================================
  * 		POR HACER
  * ====================================================
- * 1 - Escribir el loop principal relativo a cantidad de intentos
- * 2 - Escribir condiciones de acierto y no acierto
- * 3 - Escribir el contador de puntaje y su manipulacion
- * 4 - Normalizar los nombres de variables
- *
+ * * - Normalizar los nombres de variables
+ * * - Normalizar la impresion en pantalla
+ * * - Resolver la impresion de mensajes
+ * * - Revisar comentarios
  * */
 
 int main(){	
-/* ====================== Inicio ========================*/
 	Matriz mat; 		// Matriz de N * N
 	unsigned int i;		// Entero para recorrer array
 	unsigned int j;		// Entero para recorrer array
@@ -28,12 +27,18 @@ int main(){
 	unsigned int diag;	// Entero para indicar diagonal principal o secundaria
 	unsigned int random;	// Entero para guardar numero aleatorio entre  0 y (9 * N)
 	unsigned int intentos;	// Entero para guardar numero de intentos que se desea jugar
+	unsigned int intento; // Entero para control del loop principal
+	boolean filas[EJ2_N];
+	boolean columnas[EJ2_N];
+	boolean diagonales[2];
+	boolean ninguno;
+	unsigned int aciertos;
+	unsigned int errores;
+
+/* ====================== Inicio Ejercicio 2 ========================*/
 
 
-
-
-
-
+	
 /* ====================== Cargar Matriz ========================*/
 /* 
  * Para cada posicion en columna (i) y fila(j) solicito al usuario un numero y lo guardo en la variable valor.
@@ -53,6 +58,11 @@ int main(){
 			else{
 				printf("[Error]: El numero debe ser mayor que 0 y menor que 9\n");
 			}
+			#ifdef WINDOWS
+				std::system("cls");
+			#else
+				std::system("clear");
+			#endif
 		}
 		while (j < EJ2_N);
 	}
@@ -73,8 +83,6 @@ int main(){
 	}
 /* ====================== FIN Imprimir Matriz ========================*/
 
-	printf("Ingrese cuantos intentos desea jugar:");
-	scanf("%d", &intentos);	
 	
 
 
@@ -82,100 +90,184 @@ int main(){
 
 /* ====================== Juego  ========================*/
 
-	
-/* ====================== Generar Numero Aleatorio ========================*/
-/*
- * Primero inicializo el generador de numeros
- * Despues utilizo la operacion modulo (%) para generar un numero entre 0 y (9 * N)
- * Muestro el numero aleatorio
- * */
+	aciertos = 0;
+	errores = 0;
 	srand(time(0));
-	random = (rand() % (9 * EJ2_N));
-	
-/* ====================== Fin Numero Aleatorio ========================*/	
+	printf("Ingrese cuantos intentos desea jugar:");
+	scanf("%d", &intentos);	
 
+	for(intento = 1; intento <= intentos; intento++){
+		
+		random = (rand() % (9 * EJ2_N));
+		ninguno = True;
 	
+		#ifdef WINDOWS
+			system("cls");
+		#else
+			system("clear");
+		#endif
+		printf("==============================\n");	
+		printf("\tIntento numero: %d\n", intento);	
+		printf("==============================\n");	
+		printf("Numero Aleatorio: %d\n", random);
+		printf("------------------------------\n");
+		printf("Aciertos: %d\nErrores: %d\n", aciertos, errores);	
 	
-/* ====================== Evaluacion de filas, columnas y diagonales ========================*/	
-/*
- * Utilizo un tipo enumerado (sumas) para almacenar las posibles opciones  (F: fila, C: columna, D: diagonal)
- * Pregunto al usuario si la suma de algun elemento es igual al numero aleatorio y que indique si el elemento es fila,columna o diagonal
- * Despues pido que indique el numero de fila, columna o diagonal y lo guardo en la variable fil, col o diag dependiando del caso
- **/
+		for(i = 0; i < EJ2_N; i++){
+			printf("|");
+			for(j=0;j<EJ2_N;j++){
+				printf(" %d |",mat[i][j]);
+			}
+			printf("\n");
+		}
+	/* ====================== Generar Numero Aleatorio ========================*/
+	/*
+	 * Primero inicializo el generador de numeros
+	 * Despues utilizo la operacion modulo (%) para generar un numero entre 0 y (9 * N)
+	 * Muestro el numero aleatorio
+	 * */
+		
+	/* ====================== Fin Numero Aleatorio ========================*/	
 
-	sumas sum;
-	printf("Ingresar linea a sumar: (F: fila, C: columna, D: diagonal):");
-	scanf("%d", &sum);
-	
-	total = 0;
-	switch(sum){
-		case 1:
-			/* ====================== Sumar Fila  ========================*/
-			/*Si es fila, pido el numero de fila y lo guardo en fil, 
-			 * despues recorro todas las posiciones de la fila (fil, i) y sumo el valor guardado 
-			 * en cada una a la variable total inicializada en 0
-			 * */
-			printf("Ingresar numero de la fila a sumar:");
-			scanf("%d", &fil);
-			total = 0;
-			for(i=0;i<EJ2_N;i++){
-				total = total + mat[fil][i];
-			}
-			break;
-		case 2:
-			/* ====================== Sumar Columna  ========================*/
-			/*
-			 * Si es columna, pido el numero de columna y lo guardo en col,
-			 * despues recorro las posiciones de la columna (i, col) y sumo el valor guardado 
-			 * en cada una a la variable total inicializada en 0
-			 * */
-			printf("Ingresar numero de la columna a sumar:");
-			scanf("%d", &col);
-			total = 0;
-			for(i=0;i<EJ2_N;i++){
-				total = total + mat[i][col];
-			}
-			break;
-		case 3:
-			printf("Ingresar numero de la diagonal a sumar:");
-			scanf("%d", &diag);
-			total = 0;
-			if(diag == 1){
-			/* ====================== Sumar Diagonal 1  ========================*/
-			/*
-			 * Para la diagonal principal inicio la variable i en 0 y la voy incrementando 
-			 * para recorrer las posiciones de la diagonal (i,i) y sumando su valor a la variable
-			 * total inicializada en 0
-			 *
-			 * */
+		
+		
+	/* ====================== Calcular filas, columnas y diagonales ========================*/	
+				for(i = 0; i < EJ2_N;i++){
+					total = 0;
+					for(j=0;j<EJ2_N;j++){
+						total = total + mat[i][j];
+					}
+					if(total == random){
+						filas[i] = True;
+						ninguno = False;
+					}
+					else{
+						filas[i] = False;
+					}
+				}
+				
+
+				for(i = 0;i < EJ2_N;i++){
+					total = 0;
+					for(j=0;j<EJ2_N;j++){
+						total = total + mat[j][i];
+					}
+					if(total == random){
+						columnas[i] = True;
+						ninguno = False;
+					}
+					else{
+						columnas[i] = False;
+					}
+				}
+
+
+				/* ====================== Sumar Diagonal 1  ========================*/
+				/*
+				 * Para la diagonal principal inicio la variable i en 0 y la voy incrementando 
+				 * para recorrer las posiciones de la diagonal (i,i) y sumando su valor a la variable
+				 * total inicializada en 0
+				 *
+				 * */
+				total = 0;
 				for(i=0;i<EJ2_N;i++){
 					total = total + mat[i][i];
 				}
-			}
-			else { 
-				if(diag == 2){
-			/* ====================== Sumar Diagonal 2  ========================*/
-			/*
-			 * Para la diagonal secundaria inicio en la posicion N en columnas y 0 en filas
-			 * para recorrer la diagonal voy reduciendo en 1 la variable i que recorre las columnas y 
-			 * aumentando el 1 el indice en columnas mediante la operacion N - i
-			 * para cada posicion recorrida sumo su valor a la variable total inicializada en 0
-			 *
-			 * */
-					for(i=EJ2_N -1;i>=0;i--){
-						total = total + mat[i][EJ2_N - i];
-					}
+				if(total == random){
+					diagonales[0] = True;
+					ninguno = False;
 				}
-				else {
-					printf("Las diagonales pueden ser 1 o 2\n");
+				else{
+					diagonales[0] = False;
 				}
-			}
-			break;
-		default:
-			printf("Opcion Incorrecta\n");
-			break;
+				/* ====================== Sumar Diagonal 2  ========================*/
+				/*
+				 * Para la diagonal secundaria inicio en la posicion N en columnas y 0 en filas
+				 * para recorrer la diagonal voy reduciendo en 1 la variable i que recorre las columnas y 
+				 * aumentando el 1 el indice en columnas mediante la operacion N - i
+				 * para cada posicion recorrida sumo su valor a la variable total inicializada en 0
+				 *
+				 * */
+				total = 0;
+				j = EJ2_N -1;
+				for(i=0;i < EJ2_N;i++){
+					total = total + mat[i][j];
+					j--;
+				}
+
+				if(total == random){
+					diagonales[1] = True;
+					ninguno = False;
+				}
+				else{
+					diagonales[1] = False;
+				}
+
+				
+
+
+
+		ej2_opcion opcion;
+		printf("Ingresar linea a sumar: (F: fila, C: columna, D: diagonal):");
+		scanf("%d", &opcion);
+		
+		switch(opcion){
+			case F:
+				/* ====================== Sumar Fila  ========================*/
+				/*Si es fila, pido el numero de fila y lo guardo en fil, 
+				 * despues recorro todas las posiciones de la fila (fil, i) y sumo el valor guardado 
+				 * en cada una a la variable total inicializada en 0
+				 * */
+				printf("Ingresar numero de la fila a sumar:");
+				scanf("%d", &fil);
+				if(filas[fil] == random){
+					aciertos = aciertos + 1;
+				}
+				else{
+					errores = errores + 1;
+				}
+				break;
+			case C:
+				/* ====================== Sumar Columna  ========================*/
+				/*
+				 * Si es columna, pido el numero de columna y lo guardo en col,
+				 * despues recorro las posiciones de la columna (i, col) y sumo el valor guardado 
+				 * en cada una a la variable total inicializada en 0
+				 * */
+				printf("Ingresar numero de la columna a sumar:");
+				scanf("%d", &col);
+				if(columnas[col]){
+					aciertos = aciertos + 1;
+				}
+				else{
+					errores = errores + 1;
+				}
+				break;
+			case D:
+				printf("Ingresar numero de la diagonal a sumar:");
+				scanf("%d", &diag);
+				if(diagonales[diag]){
+					aciertos = aciertos + 1;
+				}
+				else{
+					errores = errores + 1;
+				}
+				break;
+			case N:
+				if(ninguno){
+					aciertos = aciertos + 1;
+				}
+				else{
+					errores = errores + 1;
+				}
+				break;
+			default:
+				printf("Opcion Incorrecta\n");
+				break;
+
+		}
 
 	}
-	printf("Total: %d\n", total);	
+	printf("Aciertos: %d\nErrores: %d\n", aciertos, errores);	
+	
 }
-
