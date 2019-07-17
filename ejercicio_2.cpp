@@ -16,6 +16,13 @@
  * * - Revisar comentarios
  * */
 
+void clean_stdin(void){
+	int c;
+	do{
+		c = getchar();
+	}while(c != '\n' && c != EOF);
+}
+
 int main(){	
 	Matriz mat; 		// Matriz de N * N
 	unsigned int i;		// Entero para recorrer array
@@ -35,6 +42,7 @@ int main(){
 	unsigned int aciertos;
 	unsigned int errores;
 
+
 /* ====================== Inicio Ejercicio 2 ========================*/
 
 
@@ -49,6 +57,10 @@ int main(){
 	for(i = 0; i < EJ2_N; i++){
 		j = 0;
 		do{
+			
+			printf("==============================\n");	
+			printf("\t  Ejercicio 2 \n");	
+			printf("==============================\n");	
 			printf("Ingresar valor para posicion %d,%d\n", i,j);
 			scanf("%d", &valor);
 			if(valor >= 0 && valor <= 9){
@@ -77,7 +89,7 @@ int main(){
 	for(i = 0; i < EJ2_N; i++){
 		printf("|");
 		for(j=0;j<EJ2_N;j++){
-			printf(" %d |",mat[i][j]);
+			printf(" %3d |",mat[i][j]);
 		}
 		printf("\n");
 	}
@@ -116,7 +128,7 @@ int main(){
 		for(i = 0; i < EJ2_N; i++){
 			printf("|");
 			for(j=0;j<EJ2_N;j++){
-				printf(" %d |",mat[i][j]);
+				printf(" %3d |",mat[i][j]);
 			}
 			printf("\n");
 		}
@@ -208,7 +220,7 @@ int main(){
 
 
 		ej2_opcion opcion;
-		printf("Ingresar linea a sumar: (F: fila, C: columna, D: diagonal):");
+		printf("Ingresar linea a sumar: (1: fila, 2: columna, 3: diagonal, 4:Ninguno):");
 		scanf("%d", &opcion);
 		
 		switch(opcion){
@@ -218,8 +230,11 @@ int main(){
 				 * despues recorro todas las posiciones de la fila (fil, i) y sumo el valor guardado 
 				 * en cada una a la variable total inicializada en 0
 				 * */
-				printf("Ingresar numero de la fila a sumar:");
-				scanf("%d", &fil);
+				do{
+					clean_stdin();
+					printf("Ingresar numero de la fila a sumar:");
+					scanf("%d", &fil);
+				}while(fil >= EJ2_N);
 				if(filas[fil] == random){
 					aciertos = aciertos + 1;
 				}
@@ -234,8 +249,11 @@ int main(){
 				 * despues recorro las posiciones de la columna (i, col) y sumo el valor guardado 
 				 * en cada una a la variable total inicializada en 0
 				 * */
-				printf("Ingresar numero de la columna a sumar:");
-				scanf("%d", &col);
+				do{
+					clean_stdin();
+					printf("Ingresar numero de la columna a sumar:");
+					scanf("%d", &col);
+				}while(col >= EJ2_N);
 				if(columnas[col]){
 					aciertos = aciertos + 1;
 				}
@@ -244,8 +262,11 @@ int main(){
 				}
 				break;
 			case D:
-				printf("Ingresar numero de la diagonal a sumar:");
-				scanf("%d", &diag);
+				do{
+					clean_stdin();
+					printf("Ingresar numero de la diagonal a sumar:");
+					scanf("%d", &diag);
+				}while(diag > 2);
 				if(diagonales[diag]){
 					aciertos = aciertos + 1;
 				}
@@ -268,6 +289,28 @@ int main(){
 		}
 
 	}
+	system("clear");
+	printf("==============================\n");	
+	printf("\t Resultado  %d\n", intento);	
+	printf("==============================\n");	
 	printf("Aciertos: %d\nErrores: %d\n", aciertos, errores);	
+	printf("------------------------------\n");
 	
+	if(aciertos <= (intentos / 3)){
+		printf("mensaje 1/3\n");
+	}
+	else{
+		if(aciertos <= (intentos /3) * 2){
+			printf("mensaje 2/3\n");
+		}
+		else{
+			if(aciertos <= intentos - 1){
+				printf("mensaje casi\n");
+			}
+			else{
+				printf("mensaje maximo\n");
+			}
+		}
+	}
+	printf("------------------------------\n");
 }
