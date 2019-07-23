@@ -57,12 +57,13 @@ int main(){
 	for(i = 0; i < EJ2_N; i++){
 		j = 0;
 		do{
-			
+			system("clear");
 			printf("==============================\n");	
 			printf("\t  Ejercicio 2 \n");	
 			printf("==============================\n");	
 			printf("Ingresar valor para posicion %d,%d\n", i,j);
 			scanf("%d", &valor);
+			clean_stdin();
 			if(valor >= 0 && valor <= 9){
 				mat[i][j] = valor;
 				j++;
@@ -70,11 +71,6 @@ int main(){
 			else{
 				printf("[Error]: El numero debe ser mayor que 0 y menor que 9\n");
 			}
-			#ifdef WINDOWS
-				std::system("cls");
-			#else
-				std::system("clear");
-			#endif
 		}
 		while (j < EJ2_N);
 	}
@@ -86,13 +82,28 @@ int main(){
  * Una vez recorrida la fila imprimo un salto de linea para formar la cuadricula.
  *
  */
+	system("clear");
+	printf("==============================\n");	
+	printf("\t  Ejercicio 2 \n");	
+	printf("==============================\n");	
+	printf("        ");
 	for(i = 0; i < EJ2_N; i++){
-		printf("|");
+		printf("%2d  ", i);
+	}
+	printf("\n");
+	printf("        ");
+	for(i = 0; i < EJ2_N; i++){
+		printf("----");
+	}
+	printf("\n");
+	for(i = 0; i < EJ2_N; i++){
+		printf("%3d -->|", i);
 		for(j=0;j<EJ2_N;j++){
-			printf(" %3d |",mat[i][j]);
+			printf("%2d |",mat[i][j]);
 		}
 		printf("\n");
 	}
+        printf("\n");
 /* ====================== FIN Imprimir Matriz ========================*/
 
 	
@@ -107,31 +118,43 @@ int main(){
 	srand(time(0));
 	printf("Ingrese cuantos intentos desea jugar:");
 	scanf("%d", &intentos);	
+	clean_stdin();
 
 	for(intento = 1; intento <= intentos; intento++){
 		
 		random = (rand() % (9 * EJ2_N));
 		ninguno = True;
 	
-		#ifdef WINDOWS
-			system("cls");
-		#else
-			system("clear");
-		#endif
+		system("clear");
 		printf("==============================\n");	
-		printf("\tIntento numero: %d\n", intento);	
+		printf("\t  Ejercicio 2 \n");	
 		printf("==============================\n");	
-		printf("Numero Aleatorio: %d\n", random);
+		printf("\tIntento numero: %4d\n", intento);	
+		printf("\tIntents restantes: %1d\n", (intentos - intento));	
+		printf("==============================\n");	
+		printf("\tAciertos: %d\n\tErrores: %d\n", aciertos, errores);	
 		printf("------------------------------\n");
-		printf("Aciertos: %d\nErrores: %d\n", aciertos, errores);	
+		printf("\tNumero Aleatorio: %d\n", random);
+		printf("------------------------------\n");
+	        printf("        ");
+        	for(i = 0; i < EJ2_N; i++){
+                	printf("%2d  ", i);
+        	}
+        	printf("\n");
+        	printf("        ");
+        	for(i = 0; i < EJ2_N; i++){
+                	printf("----");
+        	}
+        	printf("\n");
+        	for(i = 0; i < EJ2_N; i++){
+                	printf("%3d -->|", i);
+                	for(j=0;j<EJ2_N;j++){
+                        	printf("%2d |",mat[i][j]);
+                	}
+                	printf("\n");
+        	}
+        	printf("\n");
 	
-		for(i = 0; i < EJ2_N; i++){
-			printf("|");
-			for(j=0;j<EJ2_N;j++){
-				printf(" %3d |",mat[i][j]);
-			}
-			printf("\n");
-		}
 	/* ====================== Generar Numero Aleatorio ========================*/
 	/*
 	 * Primero inicializo el generador de numeros
@@ -220,8 +243,11 @@ int main(){
 
 
 		ej2_opcion opcion;
-		printf("Ingresar linea a sumar: (1: fila, 2: columna, 3: diagonal, 4:Ninguno):");
-		scanf("%d", &opcion);
+		do{
+			printf("Ingresar linea a sumar: (1: fila, 2: columna, 3: diagonal, 4:Ninguno):");
+			scanf("%d", &opcion);
+			clean_stdin();
+		}while(opcion > 4);
 		
 		switch(opcion){
 			case F:
@@ -231,9 +257,9 @@ int main(){
 				 * en cada una a la variable total inicializada en 0
 				 * */
 				do{
-					clean_stdin();
 					printf("Ingresar numero de la fila a sumar:");
 					scanf("%d", &fil);
+					clean_stdin();
 				}while(fil >= EJ2_N);
 				if(filas[fil] == random){
 					aciertos = aciertos + 1;
@@ -250,9 +276,9 @@ int main(){
 				 * en cada una a la variable total inicializada en 0
 				 * */
 				do{
-					clean_stdin();
 					printf("Ingresar numero de la columna a sumar:");
 					scanf("%d", &col);
+					clean_stdin();
 				}while(col >= EJ2_N);
 				if(columnas[col]){
 					aciertos = aciertos + 1;
@@ -263,9 +289,9 @@ int main(){
 				break;
 			case D:
 				do{
-					clean_stdin();
 					printf("Ingresar numero de la diagonal a sumar:");
 					scanf("%d", &diag);
+					clean_stdin();
 				}while(diag > 2);
 				if(diagonales[diag]){
 					aciertos = aciertos + 1;
@@ -282,33 +308,32 @@ int main(){
 					errores = errores + 1;
 				}
 				break;
-			default:
-				printf("Opcion Incorrecta\n");
-				break;
 
 		}
 
 	}
 	system("clear");
 	printf("==============================\n");	
-	printf("\t Resultado  %d\n", intento);	
+	printf("\t  Ejercicio 2 \n");	
 	printf("==============================\n");	
-	printf("Aciertos: %d\nErrores: %d\n", aciertos, errores);	
+	printf("\t Resultado  \n");	
+	printf("==============================\n");	
+	printf("Intentos jugados: %d\nAciertos: %d\nErrores: %d\n", intento, aciertos, errores);	
 	printf("------------------------------\n");
 	
 	if(aciertos <= (intentos / 3)){
-		printf("mensaje 1/3\n");
+		printf("Hay que seguir practicando las sumas!\n");
 	}
 	else{
 		if(aciertos <= (intentos /3) * 2){
-			printf("mensaje 2/3\n");
+			printf("No está mal, pero puede y debe mejorar.\n");
 		}
 		else{
 			if(aciertos <= intentos - 1){
-				printf("mensaje casi\n");
+				printf("Muy buen resultado\n");
 			}
 			else{
-				printf("mensaje maximo\n");
+				printf("Rendimiento impecable!\n");
 			}
 		}
 	}
