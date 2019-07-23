@@ -11,8 +11,6 @@
  * 		POR HACER
  * ====================================================
  * * - Normalizar los nombres de variables
- * * - Normalizar la impresion en pantalla
- * * - Resolver la impresion de mensajes
  * * - Revisar comentarios
  * */
 
@@ -41,11 +39,26 @@ int main(){
 	boolean ninguno;
 	unsigned int aciertos;
 	unsigned int errores;
+	boolean jugar;
+	char reintentar;
 
 
 /* ====================== Inicio Ejercicio 2 ========================*/
+	system("clear");
+	printf("==============================\n");
+        printf("\t  Ejercicio 2 \n");
+        printf("==============================\n");
 
+	printf("Instrucciones: \n \
+* El programa le solicitara una serie de numeros enteros entr 0 y 9 con los cuales creara una matriz.\n \
+* Una vez cargada la matriz, se le solicitara ingresar la cantidad de intentos que desea jugar\n \
+* A continuacion generara un numero aleatorio y le solicitara que indique si la suma de los \n \ 
+* elementos de alguna fila, columna o diagonal es igual al mismo.\n \
+* \n \
+* Presione Enter para continuar.");
+	getchar();
 
+	jugar = True;
 	
 /* ====================== Cargar Matriz ========================*/
 /* 
@@ -54,6 +67,7 @@ int main(){
  * Si no, no avanzo la iteracion y despliego un mensaje indicando el error hasta que el numero ingresado sea valido
  * 
  */
+	do{
 	for(i = 0; i < EJ2_N; i++){
 		j = 0;
 		do{
@@ -338,4 +352,16 @@ int main(){
 		}
 	}
 	printf("------------------------------\n");
+	do{
+		printf("\nReintentar s/n:");
+		scanf("%c", &reintentar);
+		clean_stdin();
+	}while(reintentar != 's' && reintentar != 'n');
+	if(reintentar == 's'){
+		jugar = True;
+	}else{
+		jugar = False;
+	}
+
+	}while(jugar == True);
 }
