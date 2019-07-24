@@ -33,8 +33,8 @@ int main(){
 	unsigned int random;	// Entero para guardar numero aleatorio entre  0 y (9 * N)
 	unsigned int intentos;	// Entero para guardar numero de intentos que se desea jugar
 	unsigned int intento; // Entero para control del loop principal
-	boolean filas[EJ2_N];
-	boolean columnas[EJ2_N];
+	boolean filas[N];
+	boolean columnas[N];
 	boolean diagonales[2];
 	boolean ninguno;
 	unsigned int aciertos;
@@ -68,7 +68,7 @@ int main(){
  * 
  */
 	do{
-	for(i = 0; i < EJ2_N; i++){
+	for(i = 0; i < N; i++){
 		j = 0;
 		do{
 			system("clear");
@@ -86,7 +86,7 @@ int main(){
 				printf("[Error]: El numero debe ser mayor que 0 y menor que 9\n");
 			}
 		}
-		while (j < EJ2_N);
+		while (j < N);
 	}
 /* ====================== FIN Cargar Matriz ========================*/
 
@@ -101,18 +101,18 @@ int main(){
 	printf("\t  Ejercicio 2 \n");	
 	printf("==============================\n");	
 	printf("        ");
-	for(i = 0; i < EJ2_N; i++){
+	for(i = 0; i < N; i++){
 		printf("%2d  ", i);
 	}
 	printf("\n");
 	printf("        ");
-	for(i = 0; i < EJ2_N; i++){
+	for(i = 0; i < N; i++){
 		printf("----");
 	}
 	printf("\n");
-	for(i = 0; i < EJ2_N; i++){
+	for(i = 0; i < N; i++){
 		printf("%3d -->|", i);
-		for(j=0;j<EJ2_N;j++){
+		for(j=0;j<N;j++){
 			printf("%2d |",mat[i][j]);
 		}
 		printf("\n");
@@ -136,7 +136,7 @@ int main(){
 
 	for(intento = 1; intento <= intentos; intento++){
 		
-		random = (rand() % (9 * EJ2_N));
+		random = (rand() % (9 * N));
 		ninguno = True;
 	
 		system("clear");
@@ -151,18 +151,18 @@ int main(){
 		printf("\tNumero Aleatorio: %d\n", random);
 		printf("------------------------------\n");
 	        printf("        ");
-        	for(i = 0; i < EJ2_N; i++){
+        	for(i = 0; i < N; i++){
                 	printf("%2d  ", i);
         	}
         	printf("\n");
         	printf("        ");
-        	for(i = 0; i < EJ2_N; i++){
+        	for(i = 0; i < N; i++){
                 	printf("----");
         	}
         	printf("\n");
-        	for(i = 0; i < EJ2_N; i++){
+        	for(i = 0; i < N; i++){
                 	printf("%3d -->|", i);
-                	for(j=0;j<EJ2_N;j++){
+                	for(j=0;j<N;j++){
                         	printf("%2d |",mat[i][j]);
                 	}
                 	printf("\n");
@@ -181,9 +181,9 @@ int main(){
 		
 		
 	/* ====================== Calcular filas, columnas y diagonales ========================*/	
-				for(i = 0; i < EJ2_N;i++){
+				for(i = 0; i < N;i++){
 					total = 0;
-					for(j=0;j<EJ2_N;j++){
+					for(j=0;j<N;j++){
 						total = total + mat[i][j];
 					}
 					if(total == random){
@@ -196,9 +196,9 @@ int main(){
 				}
 				
 
-				for(i = 0;i < EJ2_N;i++){
+				for(i = 0;i < N;i++){
 					total = 0;
-					for(j=0;j<EJ2_N;j++){
+					for(j=0;j<N;j++){
 						total = total + mat[j][i];
 					}
 					if(total == random){
@@ -219,7 +219,7 @@ int main(){
 				 *
 				 * */
 				total = 0;
-				for(i=0;i<EJ2_N;i++){
+				for(i=0;i<N;i++){
 					total = total + mat[i][i];
 				}
 				if(total == random){
@@ -238,8 +238,8 @@ int main(){
 				 *
 				 * */
 				total = 0;
-				j = EJ2_N -1;
-				for(i=0;i < EJ2_N;i++){
+				j = N -1;
+				for(i=0;i < N;i++){
 					total = total + mat[i][j];
 					j--;
 				}
@@ -256,7 +256,7 @@ int main(){
 
 
 
-		ej2_opcion opcion;
+		Ej2_opcion opcion;
 		do{
 			printf("Ingresar linea a sumar: (1: fila, 2: columna, 3: diagonal, 4:Ninguno):");
 			scanf("%d", &opcion);
@@ -274,7 +274,7 @@ int main(){
 					printf("Ingresar numero de la fila a sumar:");
 					scanf("%d", &fil);
 					clean_stdin();
-				}while(fil >= EJ2_N);
+				}while(fil >= N);
 				if(filas[fil] == random){
 					aciertos = aciertos + 1;
 				}
@@ -293,7 +293,7 @@ int main(){
 					printf("Ingresar numero de la columna a sumar:");
 					scanf("%d", &col);
 					clean_stdin();
-				}while(col >= EJ2_N);
+				}while(col >= N);
 				if(columnas[col]){
 					aciertos = aciertos + 1;
 				}
