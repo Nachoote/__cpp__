@@ -20,14 +20,25 @@ void clean_stdin(void){
 //Inicio declaraciones Ejercicio 1
 const int contante=1 ;
 const int EJ2_N = 3;
+const int MAX = 100;
+
 typedef int Matriz[EJ2_N][EJ2_N];
 typedef enum {F=1,C,D,N} ej2_opcion;
-typedef enum {False, True} boolean;
+typedef enum {FALSE, TRUE} boolean;
+typedef char string [MAX];
 
-
-bool seguir = false;
+boolean seguir = FALSE;
 int maxPalabras ;// cantidad maxima de palabras a buscar en del arreglo, se la pedimos al usuario
 int cantPalabrasMax = 0;
+int l;
+int aux;
+int ej1_max;
+int dif;
+char car;
+string ej1_cad;
+string ej1_cad_upper;
+boolean ej1_existe = FALSE;
+boolean ej1_valido = FALSE;
 
 //Fin declaraciones Ejercicio 1
 //Inicio Declaraciones Ejercicio 2
@@ -56,7 +67,7 @@ char reintentar;
 
 int main()
 {
-    bool entrar = true;
+    boolean entrar = TRUE;
     int opcion = 0;
     printf("============================================\n");
     printf("=                                          =\n");
@@ -73,6 +84,8 @@ int main()
       switch(opcion)
       {
           case 1:
+            clean_stdin();
+	        system("clear");
             printf("--- Ejercicio 1 --- \n");
             // Inicio Ejericio 1
             /*
@@ -86,6 +99,132 @@ int main()
             docente.
 
             */
+
+             //declaro la variable donde cargare las letras del string
+            
+            ////////////// Parte de ingresar la oracion y mostrarla al usuario///////////////////////////
+            printf ("\nIngrese una oracion que termine con '.': \n"); //solicito al usuario una oracion y le indico como debe terminarla correctamente
+            fflush(stdin);            
+            scanf ("%c", &car);
+            //limpio la variable
+            
+            /* ================ Cargar Cadena ================ */
+            l =0;
+            while (car !='\n' && l < MAX -1)
+                {
+                    ej1_cad[l] = car;            
+                    l++;
+                    scanf ("%c", &car);
+                }
+            ej1_cad[l] = '\0';
+
+            /* ================ Fin Cargar Cadena ================ */   
+
+         
+
+            /* ================ Imprimir Cadena ================ */
+
+            l=0; //seteo a 0 la variable l
+            printf ("\nLa oracion ingresada es: "); //muestro al usuario la oracion que ingreso con un while
+            while (ej1_cad[l] != '\0')
+                {
+                    printf ("%c", ej1_cad[l]);
+                    l++;
+                }
+
+            /* ================ Fin Imprimir Cadena ================ */
+
+            
+
+            /* ================ Validar oracion ================ */
+
+            if (ej1_cad[0] > 'A' && ej1_cad[0] < 'Z' && ej1_cad[l -1] == '.') ej1_valido = TRUE;
+
+            //mientras la palabra comience con mayuscula y termine con punto es valida
+
+            if (ej1_valido)
+            printf ("\nLa oracion ingresada ES VALIDA  \n");
+            else
+            printf ("\nLa oracion ingresada NO ES VALIDA   \n");
+
+            /* ================ Fin Validar oracion ================ */
+
+            /* ================ Solicitar maximo y  contar palabras ================ */
+            aux =0;
+            clean_stdin(); //limpio la variable
+            printf ("\nIngrese una cantidad maxima de palabras: ");
+            scanf ("%d", &ej1_max );
+
+
+
+            l = 0;
+            while (ej1_cad[l] !='\0'){
+                if ((ej1_cad[l] == ' ' || ej1_cad[l] == '.')&& ej1_cad[l -1] != ' '){
+                    aux = aux + 1;
+                }
+                l++;
+            }
+
+            printf ("\nHay %d cantidad palabras la oracion \n",aux);
+            dif = 0;
+            dif=ej1_max-aux;
+            printf ("\n La diferencia de palabras entre lo solcitado e ingrasado es : %d palabras \n",dif);
+
+
+
+            /* ================ Fin Solicitar maximo y  contar palabras ================ */
+
+            ////////////// Parte  saber si una palabra dada esta en la oracion ///////////////////////////
+
+
+            /* Convertir texto a mayusculas para la evaluacion */
+            l = 0;
+            while (ej1_cad[l] != '\0'){
+                if (ej1_cad[l] >= 'a' && ej1_cad[l] <= 'z'){
+                    ej1_cad_upper[l] = ej1_cad[l] - 32;
+                }
+                else{
+                    ej1_cad_upper[l] = ej1_cad[l];
+                }
+                l++;
+            }            
+            ej1_cad_upper[l] = '\0';
+
+
+
+
+            l=0; //seteo a 0 la variable l
+            printf ("\nLa oracion ingresada es: "); //muestro al usuario la oracion que ingreso con un while
+            while (ej1_cad_upper[l] != '\0')
+                {
+                    printf ("%c", ej1_cad_upper[l]);
+                    l++;
+                }
+
+
+
+
+            
+            l = 0;
+            ej1_existe = FALSE;
+            printf ("\nIngrese una palabra : ");
+            fflush(stdin);
+            scanf ("%c",&car);
+
+
+            while (!ej1_existe && ej1_cad[l] != '\0' && (ej1_cad[l] !='.') && (ej1_cad[l] !=' '))
+            {
+            if (ej1_cad[l] == car)
+            ej1_existe = TRUE;
+            else
+            l++;
+            }
+            if (ej1_existe)
+            printf ("\nLa palabra SI pertenece a la oracion ");
+            else
+            printf ("\nLa palabra NO pertenece a la oracion ");
+
+
             //Fin Ejercicio 1
 
           break;
@@ -108,7 +247,7 @@ int main()
 * Presione Enter para continuar.");
 	getchar();
 
-	jugar = True;
+	jugar = TRUE;
 
 /* ====================== Cargar Matriz ========================*/
 /*
@@ -187,7 +326,7 @@ int main()
 	for(intento = 1; intento <= intentos; intento++){
 
 		aleatorio = (rand() % (9 * EJ2_N));
-		ninguno = True;
+		ninguno = TRUE;
 
 		system("clear");
 		printf("==============================\n");
@@ -237,11 +376,11 @@ int main()
 						total = total + mat[i][j];
 					}
 					if(total == aleatorio){
-						filas[i] = True;
-						ninguno = False;
+						filas[i] = TRUE;
+						ninguno = FALSE;
 					}
 					else{
-						filas[i] = False;
+						filas[i] = FALSE;
 					}
 				}
 
@@ -252,11 +391,11 @@ int main()
 						total = total + mat[j][i];
 					}
 					if(total == aleatorio){
-						columnas[i] = True;
-						ninguno = False;
+						columnas[i] = TRUE;
+						ninguno = FALSE;
 					}
 					else{
-						columnas[i] = False;
+						columnas[i] = FALSE;
 					}
 				}
 
@@ -273,11 +412,11 @@ int main()
 					total = total + mat[i][i];
 				}
 				if(total == aleatorio){
-					diagonales[0] = True;
-					ninguno = False;
+					diagonales[0] = TRUE;
+					ninguno = FALSE;
 				}
 				else{
-					diagonales[0] = False;
+					diagonales[0] = FALSE;
 				}
 				/* ====================== Sumar Diagonal 2  ========================*/
 				/*
@@ -295,11 +434,11 @@ int main()
 				}
 
 				if(total == aleatorio){
-					diagonales[1] = True;
-					ninguno = False;
+					diagonales[1] = TRUE;
+					ninguno = FALSE;
 				}
 				else{
-					diagonales[1] = False;
+					diagonales[1] = FALSE;
 				}
 
 
@@ -408,17 +547,17 @@ int main()
 		clean_stdin();
 	}while(reintentar != 's' && reintentar != 'n');
 	if(reintentar == 's'){
-		jugar = True;
+		jugar = TRUE;
 	}else{
-		jugar = False;
+		jugar = FALSE;
 	}
 
-	}while(jugar == True);
+	}while(jugar == TRUE);
 
             //Fin Ejercicio 2
           break;
       case 0:
-          entrar = false;
+          entrar = FALSE;
           break;
       default:
           printf("ERROR: Opcion incorrecta \n");
