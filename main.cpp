@@ -34,9 +34,12 @@ int l;
 int aux;
 int ej1_max;
 int dif;
+int p ;
+int k;
 char car;
 string ej1_cad;
 string ej1_cad_upper;
+string palabra;
 boolean ej1_existe = FALSE;
 boolean ej1_valido = FALSE;
 
@@ -149,17 +152,37 @@ int main()
 
             /* ================ Fin Validar oracion ================ */
 
+            /* Convertir texto a mayusculas para la evaluacion */
+            l = 0;
+            while (ej1_cad[l] != '\0'){
+                if (!(ej1_cad[l] >= 'A' && ej1_cad[l] <= 'Z') && !(ej1_cad[l] >= 'a' && ej1_cad[l] <= 'z') && ej1_cad[l] != ' '){
+                    ej1_cad_upper[l] = ' ';
+                }
+                else {
+                    if (ej1_cad[l] >= 'a' && ej1_cad[l] <= 'z'){
+                        ej1_cad_upper[l] = ej1_cad[l] - 32;
+                    }
+                    else{
+                        ej1_cad_upper[l] = ej1_cad[l];
+                    }
+                }
+                l++;
+            }            
+            ej1_cad_upper[l] = '\0';
+
+
             /* ================ Solicitar maximo y  contar palabras ================ */
             aux =0;
             clean_stdin(); //limpio la variable
             printf ("\nIngrese una cantidad maxima de palabras: ");
             scanf ("%d", &ej1_max );
+            
 
 
 
             l = 0;
-            while (ej1_cad[l] !='\0'){
-                if ((ej1_cad[l] == ' ' || ej1_cad[l] == '.')&& ej1_cad[l -1] != ' '){
+            while (ej1_cad_upper[l] !='\0'){
+                if ((ej1_cad_upper[l] == ' ' || ej1_cad_upper[l] == '.')&& ej1_cad_upper[l -1] != ' '){
                     aux = aux + 1;
                 }
                 l++;
@@ -177,18 +200,7 @@ int main()
             ////////////// Parte  saber si una palabra dada esta en la oracion ///////////////////////////
 
 
-            /* Convertir texto a mayusculas para la evaluacion */
-            l = 0;
-            while (ej1_cad[l] != '\0'){
-                if (ej1_cad[l] >= 'a' && ej1_cad[l] <= 'z'){
-                    ej1_cad_upper[l] = ej1_cad[l] - 32;
-                }
-                else{
-                    ej1_cad_upper[l] = ej1_cad[l];
-                }
-                l++;
-            }            
-            ej1_cad_upper[l] = '\0';
+
 
 
 
@@ -208,10 +220,55 @@ int main()
             l = 0;
             ej1_existe = FALSE;
             printf ("\nIngrese una palabra : ");
-            fflush(stdin);
+            clean_stdin();
             scanf ("%c",&car);
 
 
+            /* Convertir texto a mayusculas para la evaluacion */
+            l = 0;
+            while (car != '\n'){
+                if (!(car >= 'A' && car <= 'Z') && !(car >= 'a' && car <= 'z') && car != ' '){
+                    
+                }
+                else {
+                    if (car >= 'a' && car <= 'z'){
+                        palabra[l] = car - 32;
+                    }
+                    else{
+                        palabra[l] = car;
+                    }
+                }
+                l++;
+                scanf ("%c",&car);
+            }            
+            palabra[l] = '\0';
+
+            l=0;
+            printf("==========================\n");
+            while(palabra[l] != '\0'){
+                printf("%c", palabra[l]);
+            l++;
+            }
+            
+            p = l;
+            l = 0;
+            
+            boolean letra;
+            while (ej1_existe == FALSE && ej1_cad[l] != '\0'){
+                for(k = 0; k < p ; k++){
+                   if (palabra[k] == ej1_cad_upper[l + k]){
+                          letra = TRUE;   
+                   }else{
+                          letra = FALSE;
+                   }                 
+                }
+                if(letra == TRUE){
+                    ej1_existe = TRUE;                
+                }
+                l++;
+            }
+
+/*
             while (!ej1_existe && ej1_cad[l] != '\0' && (ej1_cad[l] !='.') && (ej1_cad[l] !=' '))
             {
             if (ej1_cad[l] == car)
@@ -219,6 +276,7 @@ int main()
             else
             l++;
             }
+*/
             if (ej1_existe)
             printf ("\nLa palabra SI pertenece a la oracion ");
             else
