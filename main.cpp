@@ -6,7 +6,7 @@
 
 /*Obligatorio Programacion 1
 Integrantes: 
-Ignacio Oteggi 
+Ignacio Otegui 
 Patricia Nario 
 Fernando Panizza*/
 
@@ -83,7 +83,7 @@ int main()
     printf("============================================\n");
     while(entrar)
     {
-      printf("Ingrese el nro. del ejercicio que desea: \n");
+      printf("Ingrese el numero del ejercicio que desea: \n");
       printf("Escriba 1 para el Ejercicio 1 \n");
       printf("Escriba 2 para el Ejercicio 1 \n");
       printf("Escriba 0 para Salir \n");
@@ -110,7 +110,7 @@ int main()
              //declaro la variable donde cargare las letras del string
             
             ////////////// Parte de ingresar la oracion y mostrarla al usuario///////////////////////////
-            printf ("\nIngrese una oracion que termine con '.': \n"); //solicito al usuario una oracion y le indico como debe terminarla correctamente
+            printf ("\nIngrese una oracion que comience con una letra mayuscula, y termine con '.': \n"); //solicito al usuario una oracion y le indico como debe terminarla correctamente
             fflush(stdin);            
             scanf ("%c", &car);
             //limpio la variable
@@ -203,7 +203,7 @@ int main()
             printf ("\nHay %d cantidad palabras la oracion \n",aux);
             dif = 0;
             dif=ej1_max-aux;
-            printf ("\n La diferencia de palabras entre lo solcitado e ingrasado es : %d palabras \n",dif);
+            printf ("\n La diferencia de palabras entre lo solcitado e ingresado es : %d palabras \n",dif);
 
 
 
@@ -393,7 +393,7 @@ int main()
 	aciertos = 0;
 	errores = 0;
 	srand(time(0));
-	printf("Ingrese cuantos intentos desea jugar:");
+	printf("Indique cuantos intentos desea jugar:");
 	scanf("%d", &intentos);
 	clean_stdin();
 
@@ -407,7 +407,7 @@ int main()
 		printf("\t  Ejercicio 2 \n");
 		printf("==============================\n");
 		printf("\tIntento numero: %4d\n", intento);
-		printf("\tIntents restantes: %1d\n", (intentos - intento));
+		printf("\tIntentos restantes: %1d\n", (intentos - intento));
 		printf("==============================\n");
 		printf("\tAciertos: %d\n\tErrores: %d\n", aciertos, errores);
 		printf("------------------------------\n");
