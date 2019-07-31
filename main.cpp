@@ -33,6 +33,10 @@ int cantPalabrasMax = 0;
 int l;
 int aux;
 int ej1_max;
+int oraciones;
+int inicio_oracion;
+int largo_palabra;
+int coincidencias;
 int dif;
 int p ;
 int k;
@@ -128,27 +132,35 @@ int main()
             /* ================ Imprimir Cadena ================ */
 
             l=0; //seteo a 0 la variable l
-            printf ("\nLa oracion ingresada es: "); //muestro al usuario la oracion que ingreso con un while
+            printf ("\nTexto ingresado: \n"); //muestro al usuario la oracion que ingreso con un while
             while (ej1_cad[l] != '\0')
                 {
                     printf ("%c", ej1_cad[l]);
                     l++;
                 }
+	    printf("\n");
+	    printf("Cantidad de caracteres: %d\n", l);
 
             /* ================ Fin Imprimir Cadena ================ */
 
             
 
             /* ================ Validar oracion ================ */
+	    l =0;
+	    oraciones = 0;
+	    do{
+	    	if(ej1_cad[l] >= 'A' && ej1_cad[l] <= 'Z' && inicio_oracion == 0){
+			inicio_oracion = 1;
+		}else{
+			if((ej1_cad[l] == '.' && inicio_oracion == 1 && ej1_cad[l + 1] != '.') || ej1_cad[l + 1] == '\0'){
+				oraciones = oraciones + 1;
+				inicio_oracion = 0;
+			}
+		}
+		l++;
+	    }while(ej1_cad[l] != '\0');
 
-            if (ej1_cad[0] > 'A' && ej1_cad[0] < 'Z' && ej1_cad[l -1] == '.') ej1_valido = TRUE;
-
-            //mientras la palabra comience con mayuscula y termine con punto es valida
-
-            if (ej1_valido)
-            printf ("\nLa oracion ingresada ES VALIDA  \n");
-            else
-            printf ("\nLa oracion ingresada NO ES VALIDA   \n");
+	    printf("Cantidad de oraciones correctas: %d\n", oraciones);
 
             /* ================ Fin Validar oracion ================ */
 
@@ -250,19 +262,23 @@ int main()
             l++;
             }
             
-            p = l;
+            largo_palabra = l;
             l = 0;
-            
+
+
+	    coincidencias = 0;
+	    
             boolean letra;
             while (ej1_existe == FALSE && ej1_cad[l] != '\0'){
-                for(k = 0; k < p ; k++){
+                for(k = 0; k < largo_palabra ; k++){
                    if (palabra[k] == ej1_cad_upper[l + k]){
-                          letra = TRUE;   
-                   }else{
-                          letra = FALSE;
-                   }                 
+                          coincidencias = coincidencias +1;   
+                   }
+		   else{
+		   	coincidencias = 0;
+		   }
                 }
-                if(letra == TRUE){
+                if(coincidencias  == largo_palabra){
                     ej1_existe = TRUE;                
                 }
                 l++;
